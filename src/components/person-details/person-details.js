@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react';
 
 import SwapiService from '../../services/swapi-service';
 import Spinner from '../spinner';
+import ErrorButton from '../error-button';
 
 import './person-details.css';
 
@@ -39,7 +40,6 @@ export default class PersonDetails extends Component {
 
   render() {
     const { person, loading } = this.state;
-    console.log(person);
     const content = loading ? <Spinner /> : <PersonView person={person} />;
 
     return <div className="person-details card">{content}</div>;
@@ -60,7 +60,6 @@ const PersonView = ({ person }) => {
         src={`https://starwars-visualguide.com/assets/img/characters/${id}.jpg`}
         alt=""
       />
-
       <div className="card-body">
         <h4>{name}</h4>
         <ul className="list-group list-group-flush">
@@ -77,6 +76,9 @@ const PersonView = ({ person }) => {
             <span>{eyeColor}</span>
           </li>
         </ul>
+        <div className="row mb2 button-row">
+          <ErrorButton />
+        </div>
       </div>
     </Fragment>
   );
