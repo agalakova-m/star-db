@@ -9,7 +9,7 @@ export default class PersonDetails extends Component {
   swapiService = new SwapiService();
 
   state = {
-    person: 5,
+    person: this.props.personId,
     loading: false,
   };
 
@@ -39,6 +39,7 @@ export default class PersonDetails extends Component {
 
   render() {
     const { person, loading } = this.state;
+    console.log(person);
     const content = loading ? <Spinner /> : <PersonView person={person} />;
 
     return <div className="person-details card">{content}</div>;
@@ -46,10 +47,12 @@ export default class PersonDetails extends Component {
 }
 
 const PersonView = ({ person }) => {
-  const { id, name, gender, birthYear, eyeColor } = person;
   if (!person) {
     return <span>Select a person from a list</span>;
   }
+
+  const { id, name, gender, birthYear, eyeColor } = person;
+
   return (
     <Fragment>
       <img
