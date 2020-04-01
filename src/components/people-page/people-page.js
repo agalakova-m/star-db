@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import ItemList from '../item-list/item-list';
-import PersonDetails from '../person-details/person-details';
+import ItemDetails from '../item-details/item-details';
 import ErrorBoundary from '../error-boundary/error-boundary';
 import Row from '../row/row';
 
@@ -13,31 +13,29 @@ export default class PeoplePage extends Component {
   swapiService = new SwapiService();
 
   state = {
-    selectedPerson: 3,
+    selectedItem: 3,
   };
 
-  onPersonSelected = selectedPerson => {
+  onItemSelected = selectedItem => {
     this.setState({
-      selectedPerson,
+      selectedItem,
     });
   };
 
   render() {
     const itemList = (
       <ItemList
-        onItemSelected={this.onPersonSelected}
+        onItemSelected={this.onItemSelected}
         getData={this.swapiService.getAllPeople}
         renderItem={i => `${i.name} (${i.birthYear})`}
       />
     );
 
-    const personDetails = (
-      <PersonDetails personId={this.state.selectedPerson} />
-    );
+    const itemDetails = <ItemDetails itemId={this.state.selectedItem} />;
 
     return (
       <ErrorBoundary>
-        <Row left={itemList} right={personDetails} />
+        <Row left={itemList} right={itemDetails} />
       </ErrorBoundary>
     );
   }
