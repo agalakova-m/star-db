@@ -6,6 +6,17 @@ import ErrorButton from '../error-button';
 
 import './item-details.css';
 
+const Record = ({ item, field, label }) => {
+  return (
+    <li className="list-group-item">
+      <span className="term">{label}</span>
+      <span>{item[field]}</span>
+    </li>
+  );
+};
+
+export { Record };
+
 export default class ItemDetails extends Component {
   state = {
     item: null,
@@ -42,47 +53,33 @@ export default class ItemDetails extends Component {
   }
 
   render() {
-    const { item, loading, image } = this.state;
-    const content = loading ? (
-      <Spinner />
-    ) : (
-      <ItemView item={item} image={image} />
-    );
+    const { item, image, loading } = this.state;
+    if (!item) {
+      return <span>Select an item from a list</span>;
+    }
 
-    return <div className="item-details card">{content}</div>;
+    const { id, name, gender, birthYear, eyeColor } = item;
+
+    return (
+      <div className="item-details card">
+        {loading ? (
+          <Spinner />
+        ) : (
+          <>
+            <img className="item-image" src={image} alt="item" />
+
+            <div className="card-body">
+              <h4>{name}</h4>
+              <ul className="list-group list-group-flush">
+                {React.Children.map(this.props.children, child => {
+                  return React.cloneElement(child, { item });
+                })}
+              </ul>
+              <ErrorButton />
+            </div>
+          </>
+        )}
+      </div>
+    );
   }
 }
-
-const ItemView = ({ item, image }) => {
-  if (!item) {
-    return <span>Select a item from a list</span>;
-  }
-
-  const { id, name, gender, birthYear, eyeColor } = item;
-
-  return (
-    <Fragment>
-      <img className="item-image" src={image} alt="" />
-      <div className="card-body">
-        <h4>{name}</h4>
-        <ul className="list-group list-group-flush">
-          <li className="list-group-item">
-            <span className="term">Gender</span>
-            <span>{gender}</span>
-          </li>
-          <li className="list-group-item">
-            <span className="term">Birth Year</span>
-            <span>{birthYear}</span>
-          </li>
-          <li className="list-group-item">
-            <span className="term">Eye Color</span>
-            <span>{eyeColor}</span>
-          </li>
-        </ul>
-        <div className="row mb2 button-row">
-          <ErrorButton />
-        </div>
-      </div>
-    </Fragment>
-  );
-};
