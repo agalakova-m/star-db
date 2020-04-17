@@ -34,7 +34,7 @@ export default class ItemDetails extends Component {
     }
   }
 
-  onItemLoaded = item => {
+  onItemLoaded = (item) => {
     this.setState({
       item,
       loading: false,
@@ -58,7 +58,7 @@ export default class ItemDetails extends Component {
       return <span>Select an item from a list</span>;
     }
 
-    const { id, name, gender, birthYear, eyeColor } = item;
+    const { name } = item;
 
     return (
       <div className="item-details card">
@@ -71,7 +71,7 @@ export default class ItemDetails extends Component {
             <div className="card-body">
               <h4>{name}</h4>
               <ul className="list-group list-group-flush">
-                {React.Children.map(this.props.children, child => {
+                {React.Children.map(this.props.children, (child) => {
                   return React.cloneElement(child, { item });
                 })}
               </ul>
