@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 
+import { SwapiServiceProvider } from '../swapi-service-context';
+import SwapiService from '../../services/swapi-service';
+
 import Header from '../header';
 import RandomPlanet from '../random-planet';
 import PeoplePage from '../people-page';
@@ -19,53 +22,41 @@ import {
 import './app.css';
 
 export default class App extends Component {
+  swapiService = new SwapiService();
+
   render() {
     return (
       <ErrorBoundary>
-        <div className="stardb-app">
-          <Header />
-          {/* <RandomPlanet />
+        <SwapiServiceProvider value={this.swapiService}>
+          <div className="stardb-app">
+            <Header />
+            {/* <RandomPlanet />
           <div className="row mb2 button-row">
             <ErrorButton />
           </div> */}
-          {/* <PeoplePage /> */}
-          {/* <Row left={personDetails} right={starshipDetails} /> */}
-          <div className="row mb2">
-            <div className="col-md-6">
-              <PersonDetails itemId={11} />
-              <PlanetDetails itemId={5} />
-              <StarshipDetails itemId={9} />
-            </div>
+            {/* <PeoplePage /> */}
+            {/* <Row left={personDetails} right={starshipDetails} /> */}
+            <div className="row mb2">
+              <div className="col-md-6">
+                <PersonDetails itemId={11} />
+                <PlanetDetails itemId={5} />
+                <StarshipDetails itemId={9} />
+              </div>
 
-            <div className="col-md-6">
-              <PersonList onItemSelected={this.onItemSelected}>
-                {({ name }) => <span>{name}</span>}
-              </PersonList>
-            </div>
+              <div className="col-md-6">
+                <PersonList />
+              </div>
 
-            <div className="col-md-6">
-              <PlanetList onItemSelected={this.onItemSelected}>
-                {({ name }) => <span>{name}</span>}
-              </PlanetList>
-            </div>
+              <div className="col-md-6">
+                <PlanetList />
+              </div>
 
-            <div className="col-md-6">
-              <StarshipList onItemSelected={this.onItemSelected}>
-                {({ name }) => <span>{name}</span>}
-              </StarshipList>
+              <div className="col-md-6">
+                <StarshipList />
+              </div>
             </div>
           </div>
-          {/* <div className="row mb2">
-            <div className="col-md-6">
-              <PersonList onItemSelected={this.onItemSelected}>
-                {({ name }) => <span>{name}</span>}
-              </PersonList>
-            </div>
-            {/* <div className="col-md-6">
-              <ItemDetails itemId={this.state.selectedItem} />
-            </div> */}
-          {/* </div> */}
-        </div>
+        </SwapiServiceProvider>
       </ErrorBoundary>
     );
   }
