@@ -1,6 +1,5 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 
-import SwapiService from '../../services/swapi-service';
 import Spinner from '../spinner';
 import ErrorButton from '../error-button';
 
@@ -43,7 +42,7 @@ export default class ItemDetails extends Component {
   };
 
   updateItem() {
-    const { itemId, getData, getImageUrl } = this.props;
+    const { itemId, getData } = this.props;
     if (!itemId) {
       return;
     }
@@ -75,7 +74,7 @@ export default class ItemDetails extends Component {
                   return React.cloneElement(child, { item });
                 })}
               </ul>
-              <ErrorButton />
+              {/* <ErrorButton /> */}
             </div>
           </>
         )}
